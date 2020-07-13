@@ -11,11 +11,16 @@ import android.widget.EditText
 class NewPasswordActivity : AppCompatActivity() {
 
     private lateinit var editWordView: EditText
+    private lateinit var editSiteView: EditText
+    private lateinit var editDiscView: EditText
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_password)
-        editWordView = findViewById(R.id.edit_word)
+
+        editSiteView = findViewById(R.id.edit_site)
+        editWordView = findViewById(R.id.edit_ord)
+        editDiscView = findViewById(R.id.edit_desc)
 
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
@@ -23,8 +28,14 @@ class NewPasswordActivity : AppCompatActivity() {
             if (TextUtils.isEmpty(editWordView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
+                val site = editSiteView.text.toString()
                 val word = editWordView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, word)
+                val disc = editSiteView.text.toString()
+
+                replyIntent.putExtra(EXTRA_REPLY_pass, site)
+                replyIntent.putExtra(EXTRA_REPLY_site, word)
+                replyIntent.putExtra(EXTRA_REPLY_disc, disc)
+
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
@@ -32,6 +43,8 @@ class NewPasswordActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
+        const val EXTRA_REPLY_pass = "password"
+        const val EXTRA_REPLY_site = "site"
+        const val EXTRA_REPLY_disc= "disc"
     }
 }
